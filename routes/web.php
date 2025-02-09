@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Admin\BrandController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,4 +23,8 @@ Route::get('/about', function () {
     return 'Hello Laravel';
 });
 
+
+Route::get('/admin/brands', [BrandController::class, 'index']);
+
+Route::get('/admin/brands/{id}', [BrandController::class, 'show']);
 
