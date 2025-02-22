@@ -25,7 +25,8 @@ class Post extends Model
     protected $fillable = [
         'title',
         'content',
-        'status'
+        'status',
+        'user_id'
     ];
 
     public $casts = [
@@ -37,4 +38,16 @@ class Post extends Model
         static::addGlobalScope(new PublishedScope);
     }
     
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function tags() {
+        return $this->belongsToMany(Tag::class);
+    }
 }

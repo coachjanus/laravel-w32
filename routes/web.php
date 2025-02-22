@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Admin\{BrandController, CategoryController, PostController};
+use App\Http\Controllers\Admin\{BrandController, CategoryController, PostController, UserController};
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,7 +36,12 @@ Route::prefix('admin')->group(function(){
     Route::name('admin.')->group(function(){
         Route::resource('/categories', CategoryController::class);
         Route::resource('/posts', PostController::class);  
+        Route::resource('/users', UserController::class);  
     });
+});
+
+Route::get('/order', function() {
+    return new App\Mail\OrderShipped();
 });
 
 
