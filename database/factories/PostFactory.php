@@ -16,9 +16,12 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
+        $users = \DB::table('users')->pluck('id');
         return [
             'title' => $this->faker->unique()->catchPhrase(),
-            'content' => $this->faker->text()
+            'content' => $this->faker->text(),
+            'status' => 'published',
+            'user_id' => $this->faker->randomElement($users)
         ];
     }
 }

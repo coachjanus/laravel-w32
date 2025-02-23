@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\{BrandController, CategoryController, PostController, UserController};
 
+use App\Livewire\Admin\Users\{UserTable, CreateUser, EditUser};
+use App\Livewire\Admin\Posts\{PostTable, CreatePost, EditPost};
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -35,8 +38,15 @@ Route::prefix('admin')->group(function(){
     
     Route::name('admin.')->group(function(){
         Route::resource('/categories', CategoryController::class);
-        Route::resource('/posts', PostController::class);  
-        Route::resource('/users', UserController::class);  
+        // Route::resource('/posts', PostController::class);  
+        // Route::resource('/users', UserController::class);  
+        Route::get('users', UserTable::class)->name('users.index');
+        Route::get('users/create', CreateUser::class)->name('users.create');
+        Route::get('users/{user}/edit', EditUser::class)->name('users.edit');
+
+        Route::get('posts', PostTable::class)->name('posts.index');
+        Route::get('posts/create', CreatePost::class)->name('posts.create');
+        Route::get('posts/{post}/edit', EditPost::class)->name('posts.edit');
     });
 });
 
