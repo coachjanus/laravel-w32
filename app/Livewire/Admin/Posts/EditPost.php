@@ -7,11 +7,13 @@ use Livewire\Attributes\{Layout, Title};
 use App\Livewire\Forms\PostForm;
 use App\Enums\PostStatus;
 use App\Models\{Tag, Post};
+use Livewire\WithFileUploads;
 
 #[Layout('layouts.app')]
 #[Title('Edit Post')]
 class EditPost extends Component
 {
+    use WithFileUploads;
     public $title = "Edit Post";
 
     public PostForm $form;
@@ -20,8 +22,6 @@ class EditPost extends Component
 
     public function mount(Post $post) {
         $this->postStatus = PostStatus::cases();
-        $this->tags = Tag::pluck('name', 'id') ;
-
         $this->form->setPost($post);
     }
 
@@ -32,6 +32,6 @@ class EditPost extends Component
 
     public function render()
     {
-        return view('livewire.admin.posts.edit-post');
+        return view('livewire.admin.posts.edit-post', ['allTags'=>Tag::all()]);
     }
 }

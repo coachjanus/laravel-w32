@@ -26,7 +26,8 @@ class Post extends Model
         'title',
         'content',
         'status',
-        'user_id'
+        'user_id',
+        'cover'
     ];
 
     public $casts = [
@@ -49,5 +50,25 @@ class Post extends Model
 
     public function tags() {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function scopePopular($query) {
+        $query->withCount('likes')
+        ->orderBy('likes_count', 'desc');
+    }
+
+    public function scopeWithTag($query, $tag) {
+        $query->whereHas('tags', function ($query) use ($tag) {
+            $query->where('slug', $tag);
+        });
+    }
+
+    public function scopeSearch($query, $value) {
+        $query->where('title', 'like', "%{$value}%")
+        ->orWhere('content', 'like', "%{$value}%");
+    }
+
+    public function likes() {
+        return $this->belongsToMany(User::class, 'post_like')->withTimestamps();
     }
 }

@@ -7,11 +7,13 @@ use Livewire\Attributes\{Layout, Title};
 use App\Livewire\Forms\PostForm;
 use App\Enums\PostStatus;
 use App\Models\{Tag};
+use Livewire\WithFileUploads;
 
 #[Layout('layouts.app')]
 #[Title('Create Post')]
 class CreatePost extends Component
 {
+    use WithFileUploads;
     public $title = "Create New Post";
 
     public PostForm $form;
@@ -30,6 +32,6 @@ class CreatePost extends Component
 
     public function render()
     {
-        return view('livewire.admin.posts.create-post');
+        return view('livewire.admin.posts.create-post', ['allTags'=>Tag::all()]);
     }
 }
