@@ -8,9 +8,12 @@ use App\Http\Controllers\Admin\{BrandController, CategoryController, PostControl
 use App\Livewire\Admin\Users\{UserTable, CreateUser, EditUser};
 use App\Livewire\Admin\Posts\{PostTable, CreatePost, EditPost};
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Livewire\Main\{BlogPage, PostShow, HomePage};
+
+
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('home');
 
 Route::get('/contact', [ContactController::class, 'index']);
 
@@ -54,6 +57,13 @@ Route::get('/order', function() {
     return new App\Mail\OrderShipped();
 });
 
+
+Route::get('blog', BlogPage::class)->name('blog');
+
+Route::get('blog/show/{post:slug}', PostShow::class)->name('post.show');
+
+
+Route::get('/', HomePage::class)->name('home');
 
 Route::middleware([
     'auth:sanctum',

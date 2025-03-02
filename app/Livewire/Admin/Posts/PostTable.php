@@ -7,7 +7,7 @@ use Livewire\Attributes\{Layout, Title};
 use Livewire\WithPagination;
 use App\Models\{Post};
 
-#[Layout('layouts.app')]
+#[Layout('layouts.admin')]
 #[Title('Post List')]
 class PostTable extends Component
 {

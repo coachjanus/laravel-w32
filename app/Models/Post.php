@@ -7,6 +7,8 @@ use App\Models\Scopes\PublishedScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -70,5 +72,19 @@ class Post extends Model
 
     public function likes() {
         return $this->belongsToMany(User::class, 'post_like')->withTimestamps();
+    }
+
+    public function getThumbnailUrl() {
+        $isUrl = str_contains($this->cover, 'http');
+        return $isUrl ? $this->cover : asset(Storage::url($this->cover));
+    }
+
+    public function getReadingTime() {
+        $mins = round(str_word_count($this->content) / 250);
+        return ($mins < 1) ? 1 : $mins;
+    }
+
+    public function getExcerpt() {
+        return Str::limit(strip_tags($this->content), 150);
     }
 }

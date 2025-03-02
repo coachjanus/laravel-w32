@@ -71,7 +71,7 @@ class BlogPage extends Component
                     $query->popular();
                 })
                 ->search($this->search)
-                ->orderBy('updated_at', $this->sort)\
+                ->orderBy('updated_at', $this->sort)
                 ->paginate(3);
     }
 

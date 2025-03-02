@@ -5,20 +5,18 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}" wire:navigate>
+                    <a href="{{ route('home') }}">
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')" wire:navigate>
+                    <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ route('blog') }}" :active="request()->routeIs('blog')" wire:navigate>
-                        {{ __('Blog') }}
-                    </x-nav-link>
+                    
                 </div>
             </div>
 
