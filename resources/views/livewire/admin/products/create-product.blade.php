@@ -1,51 +1,66 @@
 <div>
-
-  <x-slot name="header">
-    <div class="flex mx-auto justify-items-stretch justify-between" role="group">
+    <x-slot name="header">
+        <div class="flex mx-auto justify-items-stretch justify-between" role="group">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ $title }}
         </h2>
-        <a href="{{ route('admin.posts') }}">
+        <a href="{{ route('admin.products') }}">
         <button type="button" class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">All posts</button>
         </a>
-    </div>
-  </x-slot>
+        </div>
+    </x-slot>
 
-  <div class="py-12">
-    <form wire:submit="save" class="max-w-sm mx-auto">
-
+    <div class="py-12">
+        <form wire:submit="save" class="max-w-sm mx-auto">
+        <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div class="mb-5">
-                <label for="title" class="block mb-2 text-sm font-medium text-gray-900">Post title</label>
-                <input type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Post title" required  wire:model="form.title" />
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Product name</label>
+                <input type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Product name" required  wire:model="form.name" />
                 <div>
-                    @error('form.title') <span class="error">{{ $message }}</span> @enderror
+                    @error('form.name') <span class="error">{{ $message }}</span> @enderror
                 </div>
             </div>
-
-
             <div class="mb-5">
-                <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Post content</label>
-                <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="text content..."  wire:model="form.content"></textarea>
-
+                <label for="price" class="block mb-2 text-sm font-medium text-gray-900">Product price</label>
+                <input id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Product price" required  type="number" wire:model="form.price" />
                 <div>
-                    @error('form.content') <span class="error">{{ $message }}</span> @enderror
+                    @error('form.price') <span class="error">{{ $message }}</span> @enderror
                 </div>
             </div>
+            </div>
 
- 
             <div class="mb-5">
-                <input type="checkbox" wire:model = "form.published_at">
+                <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Product description</label>
+                <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="text description..."  wire:model="form.description"></textarea>
+
+                <div>
+                    @error('form.description') <span class="error">{{ $message }}</span> @enderror
+                </div>
             </div>
             
-            <div class="mb-3">
-                <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" wire:model.blur="form.tags" multiple>
-                <option selected>Choose some tags</option>
-                @foreach ($tags as $key => $value)
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div class="mb-5">
+                <label for="category" class="block mb-2 text-sm font-medium text-gray-900">Select Category:</label>
+
+                <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" wire:model.blur="form.category_id">
+                <option selected>Choose a Category</option>
+                @foreach ($categories as $key => $value)
                     <option value="{{ $key }}">{{ $value }}</option>
                 @endforeach
                 </select>
             </div>
-   
+            <div class="mb-5">
+                <label for="brand" class="block mb-2 text-sm font-medium text-gray-900">Select Brand:</label>
+
+                <select id="brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" wire:model.blur="form.brand_id">
+                <option selected>Choose a Brand</option>
+                @foreach ($brands as $key => $value)
+                    <option value="{{ $key }}">{{ $value }}</option>
+                @endforeach
+                </select>
+            </div>
+            </div>
+
             <div class="mb-3">
 
                 <div class="flex items-center justify-center w-full mt-4">
@@ -65,7 +80,7 @@
                             <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                         </div>
 
-                        <input id="dropzone-file" type="file" class="hidden" wire:model="form.cover" />
+                        <input id="dropzone-file" type="file" class="hidden"   wire:model="form.cover" />
                     </label>
 
                 </div>
@@ -75,7 +90,7 @@
                 <legend class="sr-only">Status</legend>
 
                 <div class="flex items-center justify-between mb-4">
-                    @foreach ($postStatus as $status)
+                    @foreach ($productStatus as $status)
                         <input type="radio" wire:model="form.status" value="{{$status->value}}" class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300" id="status"> 
                         <label for="status" class="block ms-2  text-sm font-medium text-gray-900">
                         {{ $status->name }}
@@ -88,5 +103,4 @@
             <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
         </form>
     </div>
-
 </div>

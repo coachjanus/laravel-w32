@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\{BrandController, CategoryController, PostControl
 use App\Livewire\Admin\Users\{UserTable, CreateUser, EditUser};
 use App\Livewire\Admin\Posts\{PostTable, CreatePost, EditPost};
 
+use App\Livewire\Admin\Products\{ProductTable, CreateProduct, EditProduct};
 use App\Livewire\Main\{BlogPage, PostShow, HomePage};
 
 
@@ -50,6 +51,11 @@ Route::prefix('admin')->group(function(){
         Route::get('posts', PostTable::class)->name('posts.index');
         Route::get('posts/create', CreatePost::class)->name('posts.create');
         Route::get('posts/{post}/edit', EditPost::class)->name('posts.edit');
+
+        Route::get('products', ProductTable::class)->name('products.index');
+
+        Route::get('products/create', CreateProduct::class)->name('products.create');
+        Route::get('products/{product}/edit', EditProduct::class)->name('products.edit');
     });
 });
 
@@ -62,6 +68,10 @@ Route::get('blog', BlogPage::class)->name('blog');
 
 Route::get('blog/show/{post:slug}', PostShow::class)->name('post.show');
 
+
+use App\Livewire\Main\{Catalog, ShoppingCart};
+Route::get('shop', Catalog::class)->name('shop');
+Route::get('shopping-cart', Catalog::class)->name('shopping.cart');
 
 Route::get('/', HomePage::class)->name('home');
 

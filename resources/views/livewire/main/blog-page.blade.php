@@ -79,7 +79,7 @@
 
 				<div class="p-4">
 					<ul class="list-reset leading-normal">
-						@foreach ( $resentPosts as $item)
+						@foreach ( $latestPosts as $item)
 							<li><a href="#" class="text-gray-darkest text-sm">{{$item->title}}</a></li>
 						@endforeach 
 					</ul>
