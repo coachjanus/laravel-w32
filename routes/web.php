@@ -71,7 +71,11 @@ Route::get('blog/show/{post:slug}', PostShow::class)->name('post.show');
 
 use App\Livewire\Main\{Catalog, ShoppingCart};
 Route::get('shop', Catalog::class)->name('shop');
-Route::get('shopping-cart', Catalog::class)->name('shopping.cart');
+Route::get('shopping-cart', ShoppingCart::class)->name('shopping.cart');
+
+Route::get('checkout', function () {
+    return view('welcome');
+})->name('checkout');
 
 Route::get('/', HomePage::class)->name('home');
 

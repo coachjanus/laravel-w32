@@ -3,22 +3,22 @@
 namespace App\Livewire\Admin\Products;
 
 use Livewire\Component;
-
-use Livewire\Attributes\{Layout, Title};
 use Livewire\WithPagination;
-use App\Models\{Product};
+use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 
+#[Title('Product list')]
 #[Layout('layouts.admin')]
-#[Title('Product List')]
 class ProductTable extends Component
 {
     use WithPagination;
-
-    public $title = "Product list";
+    public $perPage = 7;
+    public $search = '';
     public $sortByColumn = 'created_at';
     public $sortDirection = 'DESC';
-    public $perPage = 5;
-    public $search = '';
+    public $title = 'Product List...';
 
     public function setSortFunctionality($columnName){
         if ($this->sortByColumn == $columnName) {
@@ -29,14 +29,24 @@ class ProductTable extends Component
         $this->sortDirection = 'ASC';
     }
 
-    public function deleteProduct($id) {
-        $product = Product::find($id);
-        $product->delete();
+    public function query() : Builder
+    {
+        return Product::query();
     }
-
-
+  
+   public function deleteProduct($id)
+   {
+       $product = Product::find($id);
+       $product->delete();
+   }
+    
     public function render()
     {
-        return view('livewire.admin.products.product-table', ['products'=>Product::search($this->search)->orderBy($this->sortByColumn, $this->sortDirection)->paginate($this->perPage)]);
+        return view('livewire.admin.products.product-table',[
+            'products' => Product::search($this->search)
+            ->orderBy($this->sortByColumn,$this->sortDirection)
+            ->paginate($this->perPage)
+        ]);
     }
+    
 }

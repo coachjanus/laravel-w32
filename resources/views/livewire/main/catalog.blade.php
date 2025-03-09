@@ -38,7 +38,7 @@
                      
 
                       
-                    </div>
+                      </div>
                      <div class="mt-1 text-xl">{{ $product->description }}</div>
                     <div class="mt-4">
                         @if (\Cart::getContent()->where('id', $product->id)->count())
@@ -81,6 +81,8 @@
                         }" x-on:keyup.enter.window="$dispatch('search',{
                             search : query
                         })" id="search-box">
+                
+
                         <div class="flex items-center px-3 py-2 mb-3 bg-gray-100 w-62 rounded-2xl">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
@@ -109,7 +111,9 @@
 
                 <div class="p-4">
                     <ul class="list-reset leading-normal">
-                        
+                        {{-- @foreach ( $latestPosts as $item)
+                            <li><a href="#" class="text-gray-darkest text-sm">{{$item->title}}</a></li>
+                        @endforeach  --}}
                     </ul>
                 </div>
             </aside>

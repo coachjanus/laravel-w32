@@ -3,20 +3,23 @@
 namespace App\Livewire\Main;
 
 use Livewire\Component;
-use Livewire\Attributes\{Layout, Title};
-use App\Models\{Tag, Post};
-use Livewire\WithPagination;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
+use App\Models\Post;
+use App\Enums\PostStatus;
 use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
 
+#[Title('Home page')]
 #[Layout('layouts.app')]
-#[Title('Home Page')]
 class HomePage extends Component
 {
     public $latestPosts;
-
-    public function mount() {
-        $this->latestPosts = Cache::remember('latestPosts', now()->addDay(), function(){
-            return Post::latest('updated_at')->with('tags')->take(4)->get();
+ 
+    public function mount() 
+    {
+        $this->latestPosts = Cache::remember('latestPosts', now()->addDay(), function () {
+            return Post::latest('updated_at')->with('tags')->take(3)->get();
         });
     }
     public function render()

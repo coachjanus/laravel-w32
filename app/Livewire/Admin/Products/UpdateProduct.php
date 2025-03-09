@@ -3,43 +3,41 @@
 namespace App\Livewire\Admin\Products;
 
 use Livewire\Component;
+use App\Enums\ProductStatus;
 use App\Livewire\Forms\ProductForm;
-use App\Models\{Brand, Category};
+use App\Models\{Product, Category, Brand};
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
-use App\Enums\ProductStatus;
 use Livewire\WithFileUploads;
-
 
 #[Title('Create Product')]
 #[Layout('layouts.app')]
-class CreateProduct extends Component
+class UpdateProduct extends Component
 {
     use WithFileUploads;
-    public $title = "Create new product";
     public ProductForm $form; 
     public $productStatus;
     public $categories;
     public $brands;
+    public $title = "Edit product";
 
-    public function mount()
-    {
+    
+    public function mount(Product $product)
+	{
         $this->productStatus = ProductStatus::cases();
         $this->categories = Category::pluck('name', 'id' );
-        
         $this->brands = Brand::pluck('name', 'id' );
-    }
+    	$this->form->setProduct($product);
+	}
  
-    public function save()
-    {
-        $this->form->store(); 
- 
-        return $this->redirect('/admin/products');
-    }
+	public function save()
+	{
+    	$this->form->update();
+     	return $this->redirect('/admin/products');
+	}
 
     public function render()
     {
-        return view('livewire.admin.products.create-product');
+        return view('livewire.admin.products.update-product');
     }
 }
-

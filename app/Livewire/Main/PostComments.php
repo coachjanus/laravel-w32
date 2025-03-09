@@ -3,13 +3,14 @@
 namespace App\Livewire\Main;
 
 use Livewire\Component;
-
-use Livewire\Attributes\{Layout, Title, Computed, Rule, On};
-use App\Models\{Tag, Post};
+use App\Models\Post;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\Rule;
 use Livewire\WithPagination;
+use Livewire\Attributes\{Layout, Title};
 
-#[Layout('layouts.app')]
-#[Title('Post Comments')]
+#[Title('Post page')]
+#[Layout('layouts.main')]
 class PostComments extends Component
 {
     use WithPagination;
@@ -19,24 +20,27 @@ class PostComments extends Component
     #[Rule('required|min:3|max:200')]
     public string $comment;
 
-    public function postComment() {
+    public function postComment()
+    {
         if (auth()->guest()) {
             return;
         }
 
         $this->validateOnly('comment');
+
         $this->post->comments()->create([
             'comment' => $this->comment,
-            'user_id'=>auth()->id()
+            'user_id' => auth()->id()
         ]);
+
         $this->reset('comment');
     }
 
     #[Computed()]
-    public function comments() {
+    public function comments()
+    {
         return $this?->post?->comments()->with('user')->latest()->paginate(5);
     }
-
     public function render()
     {
         return view('livewire.main.post-comments');
