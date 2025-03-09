@@ -9,10 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
+    use HasRoles;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
@@ -91,5 +93,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasStars(Product $product) {
         return $this->stars()->where('product_id', $product->id)->exists();
+    }
+
+    public function isAdmin() {
+        return $this->hasRoles('Admin');
     }
 }

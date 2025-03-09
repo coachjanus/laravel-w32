@@ -6,6 +6,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Form;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class PostForm extends Form
@@ -44,6 +45,9 @@ class PostForm extends Form
     }
 
     public function update() {
+        if (!Gate::allows('update-post', $this->post)) {
+            abort(403);
+        }
         $this->validate();
         if ($this->cover) {
             if($this->oldCover !== null && Storage::disk('public')->exists($this->oldCover)) {

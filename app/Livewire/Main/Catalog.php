@@ -7,7 +7,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 
 use App\Models\Product;
-use App\Enums\ProductStatus;
+// use App\Enums\ProductStatus;
 
 use Livewire\WithPagination;
 use Illuminate\Support\Collection;

@@ -28,6 +28,7 @@ class PostTable extends Component
 
     public function deletePost($id) {
         $post = Post::find($id);
+        $this->authorize('delete', $post);
         $post->delete();
     }
     

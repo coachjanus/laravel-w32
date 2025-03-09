@@ -18,14 +18,14 @@ class DatabaseSeeder extends Seeder
         // Category::factory(20)->create();
         // Post::factory(20)->create();
         // Brand::factory(20)->create();
-        Product::factory(50)->create();
+        // Product::factory(50)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        // $this->call([
-        //     BrandSeeder::class
-        // ]);
+        $this->call([
+            DefaultUserSeeder::class
+        ]);
     }
 }

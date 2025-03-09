@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-admin>
   <x-slot name="header">
     <div class="flex mx-auto justify-items-stretch justify-between" role="group">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $title }}</h2>
@@ -46,4 +46,4 @@
 
     {{ $roles->links() }}
   </div>
-</x-app-layout>
+</x-admin>
